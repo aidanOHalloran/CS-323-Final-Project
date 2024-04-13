@@ -8,3 +8,6 @@ class UserPreferences:
         self.genre = genre
         self.min_year = min_year
         self.min_rating = min_rating
+
+    def get_preferences(self):
+        return print(f'Current User Preferences: \nGenre: {self.genre}, Minimium Year: {self.min_year}, Minimum Rating: {self.min_rating}')
