@@ -18,7 +18,6 @@ class APIClient:
         
         if response.status_code == 200:
             movies = response.json()
-            print(movies)
             return movies
         else:
             print(f"Failed to fetch movies. Error code: {response.status_code}")

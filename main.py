@@ -4,6 +4,7 @@ from Classes.APIClient import APIClient
 from Classes.RecommendationEngine import RecommendationEngine
 
 import os
+from dotenv import load_dotenv
 
 def GetGenre():
     print("Select a genre: ")
@@ -93,6 +94,7 @@ def GetRecommendations():
 
 def ShowMenu():
     while True:
+        ClearScreen()
         print("Movie Recommendation System!\n")
         print("1. Set Movie Preferences")
         print("2. Get Movie Recommendations")
@@ -128,6 +130,7 @@ class Application:
         ShowMenu()
 
 if __name__ == "__main__":
-    api_key = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5ZTEzYTFmZGU4NjE5NGU3MjkzOTZkYjI2ZTI2YWJiZCIsInN1YiI6IjY2MWEwYjdlNWZmMzRlMDE3YzU5MTk1MyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.gSM7gsre-4V5F6zpADHaak5UxR6NXtJfz67PNuAub44"  # Replace this with your actual API key
+    load_dotenv()
+    api_key = os.getenv('API_KEY')
     app = Application(api_key)
     app.run()
