@@ -1,13 +1,14 @@
 class UserPreferences:
     def __init__(self):
         self.genre = None
-        self.min_year = None
-        self.min_rating = None
+        self.release_year = None
+        self.adult_rating = None
 
-    def set_preferences(self, genre, min_year, min_rating):
+    def set_preferences(self, genre, release_year, rating, adult_rating):
         self.genre = genre
-        self.min_year = min_year
-        self.min_rating = min_rating
+        self.release_year = release_year
+        self.min_rating = rating
+        self.adult_rating = adult_rating
 
     def get_preferences(self):
-        return print(f'Current User Preferences: \nGenre: {self.genre}, Minimium Year: {self.min_year}, Minimum Rating: {self.min_rating}')
+        return print(f'Current User Preferences: \n\nGenre: {self.genre}\nRelease Year: {self.release_year}\nInclude Adult Ratings: {self.adult_rating}\n')

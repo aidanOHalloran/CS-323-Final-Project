@@ -1,6 +1,6 @@
 class Movie:
-    def __init__(self, title, year, genre, rating):
+    def __init__(self, title, year, genre, adult_rating):
         self.title = title
         self.year = year
         self.genre = genre
-        self.rating = rating
+        self.adult_rating = adult_rating

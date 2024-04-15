@@ -14,26 +14,26 @@ def GetGenre():
     print("5. Romance")
     genre = input("Enter your choice: ")
     if genre == "1":
-        return "Action"
+        return "28"
     elif genre == "2":
-        return "Comedy"
+        return "35"
     elif genre == "3":
-        return "Drama"
+        return "18"
     elif genre == "4":
-        return "Horror"
+        return "27"
     elif genre == "5":
-        return "Romance"
+        return "10749"
     else:
         print("Invalid choice. Please try again.")
         GetGenre()
         
-def GetMinYear():
-    min_year = input("Enter the minimum year (ex: 2000): ")
-    if min_year.isdigit():
-        return min_year
+def GetReleaseYear():
+    release_year = input("Enter the release year (ex: 2000): ")
+    if release_year.isdigit():
+        return release_year
     else:
         print("Invalid year. Please try again.")
-        GetMinYear()
+        GetReleaseYear()
 
 def GetMinRating():
     min_rating = input("Enter the minimum rating (1-10): ")
@@ -42,61 +42,77 @@ def GetMinRating():
     else:
         print("Invalid rating. Please try again.")
         GetMinRating()
+        
+def AllowAdultRating():
+    print("Allow adult content?")
+    print("1. Yes")
+    print("2. No")
+    choice = input("Enter your choice: ")
+    if choice == "1":
+        return "true"
+    elif choice == "2":
+        return "false"
+    else:
+        print("Invalid choice. Please try again.")
+        AllowAdultRating()
 
 def SetPreferences():
     genre = GetGenre()
-    min_year = GetMinYear()
+    release_year = GetReleaseYear()
     min_rating = GetMinRating()
-    app.user_preferences.set_preferences(genre, min_year, min_rating)
-    print("Preferences set successfully. Press enter to continue.")
-    input()
+    adult_rating = AllowAdultRating()
+    app.user_preferences.set_preferences(genre, release_year, min_rating, adult_rating)
+    ClearScreen()
+    print("Preferences set successfully.")
+    input("Press enter to continue.")
     ClearScreen()
     
 def GetRecommendations():
-    if app.user_preferences.genre is None or app.user_preferences.min_year is None or app.user_preferences.min_rating is None:
-        print("ERROR: Preferences not set...")
-        print("Please set your preferences first. Press enter to continue...")
-        input()
+    if app.user_preferences.genre is None or app.user_preferences.release_year is None or app.user_preferences.min_rating is None:
+        ClearScreen()
+        print("ERROR: Preferences not set...\n")
+        print("Please set your preferences first.")
+        input("Press enter to continue.")
         ClearScreen()
         return
     
-    movies = app.api_client.fetch_movies(app.user_preferences.genre, app.user_preferences.min_year)
-    recommendations = RecommendationEngine.recommend(movies, app.user_preferences)
+    movies = app.api_client.fetch_movies(app.user_preferences.genre, app.user_preferences.release_year, app.user_preferences.min_rating, app.user_preferences.adult_rating)
+    recommendations = RecommendationEngine.recommend(movies)
     
     if recommendations is None:
         print("No recommendations found. Please adjust your preferences.")
-        print("Press enter to continue.")
-        input()
+        input("Press enter to continue.")
         ClearScreen()
         return
     
     print("Recommended Movies:")
     for movie in recommendations:
         print(f"Title: {movie.title}, Year: {movie.year}, Genre: {movie.genre}, Rating: {movie.rating}")
-    print("Press enter to continue.")
-    input()
+    input("Press enter to continue.")
     ClearScreen()
-    ShowMenu()
 
 def ShowMenu():
     while True:
         print("Movie Recommendation System!\n")
-        print("1. Set Preferences")
-        print("2. Get Recommendations")
+        print("1. Set Movie Preferences")
+        print("2. Get Movie Recommendations")
         print("3. Exit\n")
         choice = input("Enter menu choice: ")
 
         if choice == "1":
             ClearScreen()
             SetPreferences()
+            app.user_preferences.get_preferences()
+            input("Press enter to continue...")
+            ClearScreen()
         elif choice == "2":
             GetRecommendations()
         elif choice == "3":
             print("Exiting the program...")
             break  # This exits the while loop and thus ends the program
         else:
-            print("Invalid choice. Press enter try again...")
-            input()
+            print("Invalid choice.")
+            input("Press enter try again...")
             ClearScreen()  # Clear the screen and show the menu again
 
 
@@ -112,6 +128,6 @@ class Application:
         ShowMenu()
 
 if __name__ == "__main__":
-    api_key = "YOUR_API_KEY"  # Replace this with your actual API key
+    api_key = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5ZTEzYTFmZGU4NjE5NGU3MjkzOTZkYjI2ZTI2YWJiZCIsInN1YiI6IjY2MWEwYjdlNWZmMzRlMDE3YzU5MTk1MyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.gSM7gsre-4V5F6zpADHaak5UxR6NXtJfz67PNuAub44"  # Replace this with your actual API key
     app = Application(api_key)
     app.run()
