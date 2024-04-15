@@ -6,6 +6,17 @@ class APIClient:
         self.base_url = "https://api.themoviedb.org/3/discover/movie"  # Replace with the actual API URL
 
     def fetch_movies(self, genre, year, rating,  adult_rating):
+        if genre == "Action":
+            genre = "28"
+        elif genre == "Comedy":
+            genre = "35"
+        elif genre == "Drama":
+            genre = "18"
+        elif genre == "Horror":
+            genre = "27"
+        elif genre == "Romance":
+            genre = "10749"
+        
         url = self.base_url + f"?include_adult={adult_rating}&include_video=false&language=en-US&page=1&primary_release_year={year}&sort_by=popularity.desc&with_genres={genre}"
         
         
@@ -22,3 +33,4 @@ class APIClient:
         else:
             print(f"Failed to fetch movies. Error code: {response.status_code}")
             return None
+ 

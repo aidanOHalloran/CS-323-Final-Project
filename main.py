@@ -2,9 +2,9 @@ from Classes.Movie import Movie
 from Classes.UserPreferences import UserPreferences
 from Classes.APIClient import APIClient
 from Classes.RecommendationEngine import RecommendationEngine
-
 import os
 from dotenv import load_dotenv
+import pandas as pd
 
 def GetGenre():
     print("Select a genre: ")
@@ -15,15 +15,15 @@ def GetGenre():
     print("5. Romance")
     genre = input("Enter your choice: ")
     if genre == "1":
-        return "28"
+        return "Action"
     elif genre == "2":
-        return "35"
+        return "Comedy"
     elif genre == "3":
-        return "18"
+        return "Drama"
     elif genre == "4":
-        return "27"
+        return "Horror"
     elif genre == "5":
-        return "10749"
+        return "Romance"
     else:
         print("Invalid choice. Please try again.")
         GetGenre()
@@ -86,9 +86,6 @@ def GetRecommendations():
         ClearScreen()
         return
     
-    print("Recommended Movies:")
-    for movie in recommendations:
-        print(f"Title: {movie.title}, Year: {movie.year}, Genre: {movie.genre}, Rating: {movie.rating}")
     input("Press enter to continue.")
     ClearScreen()
 

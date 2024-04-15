@@ -7,4 +7,4 @@ class RecommendationEngine:
             print(f"Release Date: {movie['release_date']}")
             print(f"Overview: {movie['overview']}")
             print("="*50)  # Separator line for better readability
-        input("Press enter to continue.")
+        return movies
